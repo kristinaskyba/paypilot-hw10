@@ -120,7 +120,7 @@ python3 tools/compare_judges.py reports/calibration-cloud.json reports/calibrati
 
 **Крок 5. Рядок вартості.** t_local = час прогону / кількість викликів (скрипт друкує середній виклик). Гроші 0, секунди = t_local × виклики релізного прогону × режим.
 
-**Крок 6. Чернетка рекомендації.** Перші чотири розділи `model-selection-recommendation.md` за шаблоном з теми.
+**Крок 6. Чернетка рекомендації.** Перші чотири розділи `model-selection-recommendation.md` [за шаблоном з теми](model-selection-recommendation.template.md).
 
 ## Що знаходиться у звіті
 
