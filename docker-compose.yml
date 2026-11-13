@@ -4,6 +4,8 @@ x-eval: &eval
   entrypoint: ["python", "cli.py"]
   command: []
   env_file:
+    - path: judge.local.env
+      required: false
     - path: .env
       required: false
   volumes:
