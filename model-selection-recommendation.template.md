@@ -1,50 +1,69 @@
-# Model Selection Recommendation: суддя всередині периметра
+# Model Selection Recommendation: <task> (<system>)
 
-Автор: <ім'я> · Дата: <РРРР-ММ-ДД> · Набір: `l09_labels` (12 кейсів), рубрика `rubric.v1`
+Author: <name> · Date: <YYYY-MM-DD> · Evaluation set: <name> (<N> labelled cases), rubric/spec version: <version>
 
-> **Відповідь на питання CTO (1–2 речення, пишіть останнім, ставте першим):**
-> Чи працює локальний суддя з тією ж ефективністю? З якими числами й з яким обмеженням?
+## 1. Decision
 
-## 1. Контракт локального судді
+> **Answer to the decision maker (1–2 sentences, write last, put first):**
+> Does the new model do the task as well as the current one? With which numbers and which limit?
 
-| Пункт | Значення |
+**Verdict: move / move with a condition / do not move.** Condition (if any): <...>
+
+## 2. Perimeter
+
+| What goes out during one model call | From | Before | After |
+| --- | --- | --- | --- |
+| <input data> | <field / source> | <where it goes> | <where it goes> |
+
+Can sensitive parts be masked without changing what the model must read? <yes / no, why>
+Not closed or not yet checked: <reports, logs, traces, backups, other model calls in the system>
+
+## 3. Contract (requirements written before choosing a model)
+
+| Item | Value |
 | --- | --- |
-| Тег моделі (параметр, не константа) | `<тег>` |
-| Дата перевірки | `<дата>` |
-| Структурований вихід (`format`) | так / ні; режим `JUDGE_FORMAT=<schema/json/none>` |
-| Розмір на диску | `<ГБ>` (ліміт ≤ 6 ГБ) |
-| Температура | `0` (чи те, що вивів `judge.py`) |
-| Помилки й таймаути в калібруванні | `<N з 60>`; які саме |
+| Output format the code needs (schema, structured output) | <supported? mode> |
+| Size / memory limit | <value> (limit <value>) |
+| Sampling settings (temperature etc.) | <value> |
+| Model name and date checked (a setting, not a constant) | <tag, digest/version, date> |
+| Other requirements (context size, language, licence, latency) | <...> |
 
-## 2. Дві заяви поруч
+Errors and timeouts in the evaluation run: <N of M>.
 
-| | Хмарний суддя | Локальний суддя |
+## 4. Two statements side by side (same set, same rubric, only the model changes)
+
+| | Current model | New model |
 | --- | --- | --- |
-| Модель | `<тег>` | `<тег>` |
-| Самоузгодженість | `<k з 12>` | `<k з 12>` |
-| Узгодженість з мітками | `<k з 12>`, інтервал `<a–b>` | `<k з 12>`, інтервал `<a–b>` |
-| Очевидні кейси / спірні кейси | `<x з 8>` / `<y з 4>` | `<x з 8>` / `<y з 4>` |
-| Цитата знайдена у відповіді | `<k з n непорожніх>` | `<k з n непорожніх>` |
-| **Де не працює** | `<кейси й спільна ознака>` | `<кейси й спільна ознака>` |
+| Model | <name> | <name> |
+| Self-consistency (same answer on repeat runs) | <k of N> | <k of N> |
+| Agreement with labels | <k of N>, 95 % interval <a–b> | <k of N>, 95 % interval <a–b> |
+| Groups (e.g. obvious yes / obvious no / disputed) | <...> | <...> |
+| **Where it does not work** (a class of cases with a shared feature) | <...> | <...> |
 
-Висновок за правилом інтервалів: інтервали **перекриваються / не перекриваються**, отже різницю **не доведено / доведено**.
-Кейси з різним вердиктом: `<id>`. Кейси, де обидва розходяться з міткою: `<id>` (питання до мітки чи рубрики, а не до судді).
+Rule: the models differ only if the intervals do not overlap. Conclusion: <difference proven / not proven>.
+Cases with a different result: <ids>. Cases where both disagree with the label: <ids> (a question for the label or the rubric).
 
-## 3. Рядок вартості (у двох валютах)
+## 5. Cost in two currencies
 
-| | Хмарний суддя | Локальний суддя |
+| | Current model | New model |
 | --- | --- | --- |
-| Гроші за релізний прогін | `<EUR>` | 0 |
-| Секунди на виклик (`t_call_mean`) | `<с>` | `<с>` |
-| Релізний прогін: `<кейси судді> × 5 × с` | `<хв>` | `<хв>` |
+| Money per call | <...> | <...> |
+| Seconds per call | <...> | <...> |
+| One real run: <calls> × <s> | <money, minutes> | <money, minutes> |
 
-Залізо, на якому виміряно: `<модель процесора / RAM / GPU>`. Режим: один виклик на кейс.
+Call mode: <one call / two calls / other>. How the time was measured: <script, hardware, warm or cold model>.
 
-## 4. Попередній вердикт
+## 6. Trade-offs and conditions
 
-**Переїжджати / переїжджати з умовою / не переїжджати.** Умова (якщо є): `<...>`
+What the move does not solve:
+1. Model version: <how a silent update is detected>
+2. Call mode: <a different mode is a different instrument>
+3. The whole perimeter: <what still leaves the controlled area>
 
-- Чому, у двох-трьох реченнях, з посиланням на числа з розділів 2–3.
-- Що змінилося б за протилежного мандату: у Verta тримає швидкість релізів; за вимоги Zero regulatory risk відповідь була б `<...>`.
-- Тригери перекалібрування: новий тег або дайджест моделі, нова версія рубрики, інший режим виклику (`JUDGE_FORMAT`).
-- Периметр перевіряється цілком: чи не синхронізуються звіти й логи у хмару.
+Opposite mandate: if the priority were <speed / zero risk / cost>, the answer would be <...>.
+
+## 7. Configuration and recalibration
+
+- Configuration file: <file> (model, format, settings; no secrets)
+- How to run the evaluation: <command>
+- Recalibrate when: model name or version changes, call mode changes, rubric changes, <other>
