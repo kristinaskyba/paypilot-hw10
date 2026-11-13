@@ -1,0 +1,44 @@
+{
+  "set": "l10_one",
+  "set_hash": "2da8f471aae7",
+  "judge_model": "ollama:qwen3:8b",
+  "temperature": null,
+  "runs": 3,
+  "ran_at": "2026-11-13T16:15:16.414451+00:00",
+  "self_consistency": [
+    1,
+    1
+  ],
+  "agreement": [
+    1,
+    1
+  ],
+  "agreement_wilson": [
+    0.207,
+    1.0
+  ],
+  "elapsed": 21.3,
+  "t_call_mean": 7.09,
+  "errors": 0,
+  "quote_found": [
+    3,
+    3
+  ],
+  "quote_empty": 0,
+  "cases": [
+    {
+      "id": "LB-11",
+      "label": "FAIL",
+      "disputed": false,
+      "verdicts": [
+        "FAIL",
+        "FAIL",
+        "FAIL"
+      ],
+      "majority": "FAIL",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "A specialist will contact you within one business day."
+    }
+  ]
+}
