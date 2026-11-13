@@ -1,3 +1,29 @@
+# HW 10: Local judge and economics (Kristina Nilsson)
+
+**Local Judge Configuration:** tested on `ollama:qwen3:8b` (ID `500a1f067a9f`, 5.2 GB) as of 2026-11-13,
+Ollama 0.40.16, `JUDGE_FORMAT=schema`, one call per case, temperature 0. Settings: [`judge.local.env`](judge.local.env).
+
+| File | What it is |
+| --- | --- |
+| [`model-selection-recommendation.md`](model-selection-recommendation.md) | decision document: move the judge inside the perimeter or not |
+| [`judge-trust-statement.local.md`](judge-trust-statement.local.md) | second trust statement (local judge) |
+| [`judge-trust-statement.md`](judge-trust-statement.md) | first trust statement (cloud judge, HW 9) |
+| `reports/calibration-l09_labels-20261113T164231.json` | local judge, 34 cases, runs 5 |
+| `reports/calibration-cloud.json` | cloud judge (Sonnet 5.5), 34 cases, runs 5, from HW 9 |
+| [`model-selection-recommendation.template.md`](model-selection-recommendation.template.md) | general template for choosing a model in any system |
+| [`lab-notes.md`](lab-notes.md) | lab steps 1–5, predictions vs results |
+
+**Run (chain-ready, works on a clean clone):**
+
+    ollama pull qwen3:8b
+    JUDGE_MODEL=ollama:qwen3:8b docker compose run --rm --entrypoint python eval tools/calibrate_run.py l09_labels
+
+**Change to the kit:** `docker-compose.yml` also reads `judge.local.env`. Without it, the command above
+failed on a clean clone with "JUDGE_MODEL не задано": `JUDGE_MODEL` from the command line is not passed
+into the container, and a clean clone has no `.env`. `.env` is still read last and can override.
+
+---
+
 # Лабораторна L10: суддя всередині периметра
 
 Цей файл пояснює, що де лежить і як запускати. Порядок дій і пояснення в темі; тут лише практика. Лабораторна працює на репозиторії лабораторної L09 (`paypilot-l09-eval`): нових наборів немає, змінюється тільки модель судді.
