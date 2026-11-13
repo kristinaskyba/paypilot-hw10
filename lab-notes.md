@@ -17,7 +17,7 @@
 | none | 3 / 3 | FFF (label FAIL) | 3 / 3 | 7.1 s |
 
 ## Step 3: calibration on 34 cases (JUDGE_FORMAT=schema, runs 5)
-- Report: reports/calibration-local.json (judge_model ollama:qwen3:8b)
+- Report: reports/calibration-l09_labels-20261113T164231.json (judge_model ollama:qwen3:8b)
 - Agreement 26/34 = 0.76 (0.60–0.88); self-consistency 33/34 (LB-10 PFFFF)
 - Obvious 22/24, disputed 4/10; errors 0; quote found 170/170
 - Time 1523 s, 8.96 s per call
